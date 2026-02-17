@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安卓与 Linux - Linux 系统编程</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🐧</span>
+            <span class="title">Linux 系统编程</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="linux-env.html">Linux环境</a></li>
+            <li><a href="architecture.html">系统架构</a></li>
+            <li><a href="c-programming.html">C语言</a></li>
+            <li><a href="kernel.html">内核模块</a></li>
+            <li><a href="android.html" class="active">安卓</a></li>
+            <li><a href="quiz.html">测验</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-container">
+            <header class="page-header">
+                <h1><span class="icon">📱</span> 安卓与 Linux 的关系</h1>
+                <p class="breadcrumb"><a href="../index.html">首页</a> / 安卓与 Linux</p>
+            </header>
+
+            <!-- 核心关系 -->
+            <section class="content-section" id="relationship">
+                <h2 class="section-title">
+                    <span class="icon">🔗</span>
+                    核心关系
+                </h2>
+
+                <div class="info-box" style="font-size: 1.1rem;">
+                    <h4 style="font-size: 1.2rem;">一句话总结</h4>
+                    <p><strong>安卓 = Linux 内核 + 自己的一套框架</strong></p>
+                    <ul style="margin-top: 1rem;">
+                        <li>安卓底层 = Linux 内核</li>
+                        <li>安卓上层 = 它自己的框架（HAL、Framework、APP）</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 架构对比 -->
+            <section class="content-section" id="architecture-compare">
+                <h2 class="section-title">
+                    <span class="icon">🏗️</span>
+                    架构对比
+                </h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <!-- Linux 架构 -->
+                    <div class="diagram-container" style="margin: 0;">
+                        <h4 style="text-align: center; margin-bottom: 1rem;">🐧 Linux 架构</h4>
+                        <div class="arch-diagram">
+                            <div class="arch-layer app-layer">
+                                🖥️ 用户应用
+                                <div style="font-size: 0.75rem; font-weight: normal;">浏览器、编辑器、服务</div>
+                            </div>
+                            <div class="arch-layer lib-layer">
+                                📚 系统库
+                                <div style="font-size: 0.75rem; font-weight: normal;">glibc、GUI 库</div>
+                            </div>
+                            <div class="arch-layer kernel-layer">
+                                ⚙️ Linux 内核
+                            </div>
+                            <div class="arch-layer hw-layer">
+                                🔧 硬件
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Android 架构 -->
+                    <div class="diagram-container" style="margin: 0;">
+                        <h4 style="text-align: center; margin-bottom: 1rem;">🤖 Android 架构</h4>
+                        <div class="arch-diagram">
+                            <div class="arch-layer app-layer">
+                                📱 APP 层
+                                <div style="font-size: 0.75rem; font-weight: normal;">APK 应用</div>
+                            </div>
+                            <div class="arch-layer" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                                🧩 Framework 层
+                                <div style="font-size: 0.75rem; font-weight: normal;">Activity Manager, Window...</div>
+                            </div>
+                            <div class="arch-layer" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                                ☕ Runtime 层
+                                <div style="font-size: 0.75rem; font-weight: normal;">ART 虚拟机</div>
+                            </div>
+                            <div class="arch-layer lib-layer">
+                                📦 Native 层
+                                <div style="font-size: 0.75rem; font-weight: normal;">C/C++ 库, HAL</div>
+                            </div>
+                            <div class="arch-layer kernel-layer">
+                                ⚙️ Linux 内核
+                            </div>
+                            <div class="arch-layer hw-layer">
+                                🔧 硬件
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 安卓底层 = Linux 内核 -->
+            <section class="content-section" id="android-kernel">
+                <h2 class="section-title">
+                    <span class="icon">⚙️</span>
+                    安卓底层 = Linux 内核
+                </h2>
+
+                <div class="success-box">
+                    <h4>✅ 安卓使用的 Linux 内核功能</h4>
+                </div>
+
+                <div class="card-grid">
+                    <div class="feature-card">
+                        <div class="icon">📊</div>
+                        <h4>进程管理</h4>
+                        <p>fork, exec, 调度</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🧠</div>
+                        <h4>内存管理</h4>
+                        <p>虚拟内存、分页</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📁</div>
+                        <h4>文件系统</h4>
+                        <p>ext4, f2fs</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🌐</div>
+                        <h4>网络协议栈</h4>
+                        <p>TCP/IP, Socket</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🔧</div>
+                        <h4>设备驱动</h4>
+                        <p>显示、触摸、传感器</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🔐</div>
+                        <h4>安全模块</h4>
+                        <p>SELinux, 权限控制</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>🔧 安卓特有的内核模块</h4>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>模块</th>
+                                <th>作用</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Binder</strong></td>
+                                <td>进程间通信 (IPC)</td>
+                                <td>安卓的核心 IPC 机制，替代传统 Linux IPC</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ashmem</strong></td>
+                                <td>匿名共享内存</td>
+                                <td>进程间共享大块内存</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wakelock</strong></td>
+                                <td>电源管理</td>
+                                <td>防止设备休眠，保持唤醒</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Low Memory Killer</strong></td>
+                                <td>内存回收</td>
+                                <td>内存不足时按优先级杀进程</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Logger</strong></td>
+                                <td>日志系统</td>
+                                <td>内核级日志缓冲区</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Binder IPC 工作原理</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <div>进程 A</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">客户端</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step highlight" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));">
+                            <div>Binder 驱动</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">内核模块</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">
+                            <div>进程 B</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">服务端</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 安卓上层 = 自己的框架 -->
+            <section class="content-section" id="android-framework">
+                <h2 class="section-title">
+                    <span class="icon">🧩</span>
+                    安卓上层 = 它自己的框架
+                </h2>
+
+                <div class="diagram-container">
+                    <h4>Android 框架层详解</h4>
+                    <div class="arch-diagram">
+                        <div class="arch-layer app-layer">
+                            📱 APP 层
+                            <div style="font-size: 0.75rem; font-weight: normal;">Java/Kotlin 应用 (APK)</div>
+                        </div>
+                        <div class="arch-layer" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                            🧩 Framework 层
+                            <div style="font-size: 0.75rem; font-weight: normal;">
+                                ActivityManager | PackageManager | WindowManager | ContentProvider
+                            </div>
+                        </div>
+                        <div class="arch-layer" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                            ☕ Runtime 层 (ART)
+                            <div style="font-size: 0.75rem; font-weight: normal;">
+                                Java 虚拟机 | 垃圾回收 | JIT/AOT 编译
+                            </div>
+                        </div>
+                        <div class="arch-layer lib-layer">
+                            📦 Native 层 (C/C++)
+                            <div style="font-size: 0.75rem; font-weight: normal;">
+                                HAL | SurfaceFlinger | MediaPlayer | SQLite
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="feature-card">
+                        <div class="icon">📋</div>
+                        <h4>Activity Manager</h4>
+                        <p>管理应用生命周期、任务栈</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📦</div>
+                        <h4>Package Manager</h4>
+                        <p>管理应用安装、权限</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🪟</div>
+                        <h4>Window Manager</h4>
+                        <p>管理窗口、显示</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">💾</div>
+                        <h4>Content Provider</h4>
+                        <p>跨应用数据共享</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>HAL (Hardware Abstraction Layer)</h4>
+                    <p>硬件抽象层，屏蔽不同硬件的差异，为上层 Framework 提供统一的硬件接口。</p>
+                </div>
+            </section>
+
+            <!-- 开发语言对比 -->
+            <section class="content-section" id="language-compare">
+                <h2 class="section-title">
+                    <span class="icon">💻</span>
+                    开发语言对比
+                </h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>方面</th>
+                                <th>🐧 Linux</th>
+                                <th>🤖 Android</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>主要语言</strong></td>
+                                <td>C / C++</td>
+                                <td>Java / Kotlin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>应用格式</strong></td>
+                                <td>ELF 可执行文件</td>
+                                <td>APK (DEX 字节码)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UI 框架</strong></td>
+                                <td>GTK / Qt / X11</td>
+                                <td>Android UI Toolkit / Jetpack Compose</td>
+                            </tr>
+                            <tr>
+                                <td><strong>运行时</strong></td>
+                                <td>原生执行</td>
+                                <td>ART 虚拟机</td>
+                            </tr>
+                            <tr>
+                                <td><strong>包管理</strong></td>
+                                <td>apt / yum / pacman</td>
+                                <td>Google Play / APK 安装</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IPC 机制</strong></td>
+                                <td>pipe, socket, shm</td>
+                                <td>Binder, AIDL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 总结对比 -->
+            <section class="content-section" id="summary">
+                <h2 class="section-title">
+                    <span class="icon">📌</span>
+                    总结对比
+                </h2>
+
+                <div class="diagram-container">
+                    <h4>层级对应关系</h4>
+                    <div class="table-container" style="margin: 0;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>层级</th>
+                                    <th>Linux</th>
+                                    <th>Android</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>内核</strong></td>
+                                    <td colspan="2" style="text-align: center; background: rgba(245, 158, 11, 0.2);">
+                                        Linux Kernel（相同）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>运行时</strong></td>
+                                    <td>glibc + 原生</td>
+                                    <td>ART 虚拟机</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>框架</strong></td>
+                                    <td>GTK / Qt 等</td>
+                                    <td>Android Framework</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>应用</strong></td>
+                                    <td>桌面应用</td>
+                                    <td>APK 应用</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="feature-card">
+                        <div class="icon">🐧</div>
+                        <h4>Linux 的特点</h4>
+                        <ul style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>通用操作系统</li>
+                            <li>高度可定制</li>
+                            <li>服务器/桌面/嵌入式</li>
+                            <li>原生 C/C++ 开发</li>
+                            <li>传统 IPC 机制</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🤖</div>
+                        <h4>Android 的特点</h4>
+                        <ul style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>移动设备专用</li>
+                            <li>触摸交互优化</li>
+                            <li>应用沙箱隔离</li>
+                            <li>Java/Kotlin 开发</li>
+                            <li>Binder IPC</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box" style="text-align: center;">
+                    <h4>🎓 学习建议</h4>
+                    <p>先学习 Linux 系统编程，理解内核和底层原理，再学习 Android 开发，会更容易理解 Framework 层的设计。</p>
+                </div>
+            </section>
+
+            <!-- 完成按钮 -->
+            <div class="completion-section" style="text-align: center; margin: 3rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius-xl);">
+                <h3 style="margin-bottom: 1rem;">🎉 完成本模块学习？</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">点击按钮保存学习进度</p>
+                <button onclick="markCompleted('android')" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius-lg); font-size: 1rem; font-weight: 600; cursor: pointer;">
+                    ✓ 标记为已完成
+                </button>
+            </div>
+
+            <!-- 最终完成提示 -->
+            <div style="text-align: center; padding: 3rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1)); border-radius: var(--radius-xl); margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 1rem;">🎊 恭喜完成所有模块！</h2>
+                <p style="color: var(--text-secondary);">你已经学习了 Linux 系统编程的核心知识</p>
+                <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">
+                    建议继续深入学习：进程间通信、网络编程、内核模块开发
+                </p>
+            </div>
+
+            <!-- 导航按钮 -->
+            <div class="nav-buttons">
+                <a href="kernel.html" class="nav-btn">
+                    ← 上一章：内核模块
+                </a>
+                <a href="../index.html" class="nav-btn next">
+                    返回首页 →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Linux 系统编程学习指南</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 语言编程 - Linux 系统编程</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🐧</span>
+            <span class="title">Linux 系统编程</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="linux-env.html">Linux环境</a></li>
+            <li><a href="architecture.html">系统架构</a></li>
+            <li><a href="c-programming.html" class="active">C语言</a></li>
+            <li><a href="kernel.html">内核模块</a></li>
+            <li><a href="android.html">安卓</a></li>
+            <li><a href="quiz.html">测验</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-container">
+            <header class="page-header">
+                <h1><span class="icon">💻</span> C 语言编程</h1>
+                <p class="breadcrumb"><a href="../index.html">首页</a> / C 语言编程</p>
+            </header>
+
+            <!-- 为什么学 C 语言 -->
+            <section class="content-section" id="why-c">
+                <h2 class="section-title">
+                    <span class="icon">❓</span>
+                    为什么学 C 语言？
+                </h2>
+
+                <div class="info-box">
+                    <p>C 语言是 Linux 系统编程的<strong>基础语言</strong>。Linux 内核就是用 C 语言写的！掌握 C 语言，你才能理解操作系统底层是如何工作的。</p>
+                </div>
+
+                <div class="card-grid">
+                    <div class="feature-card">
+                        <div class="icon">⚡</div>
+                        <h4>高性能</h4>
+                        <p>C 语言直接编译成机器码，执行效率极高</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🎛️</div>
+                        <h4>底层控制</h4>
+                        <p>可以直接操作内存、硬件</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🔧</div>
+                        <h4>系统编程</h4>
+                        <p>操作系统、驱动、嵌入式开发首选</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📚</div>
+                        <h4>学习基础</h4>
+                        <p>理解 C++、Java 等语言的基础</p>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>C 程序的执行流程</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="num">1</span>
+                            <div>源代码</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">hello.c</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">
+                            <span class="num">2</span>
+                            <div>编译</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">gcc -o hello hello.c</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">
+                            <span class="num">3</span>
+                            <div>可执行文件</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">hello (二进制)</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step highlight">
+                            <span class="num">4</span>
+                            <div>运行</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">./hello</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 变量、判断、循环 -->
+            <section class="content-section" id="basics">
+                <h2 class="section-title">
+                    <span class="icon">📝</span>
+                    1. 变量、判断、循环
+                </h2>
+
+                <!-- 变量概念 -->
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    📦 什么是变量？
+                </h3>
+                
+                <div class="info-box">
+                    <p><strong>变量</strong>就像是一个"盒子"，用来存储数据。每个盒子有：</p>
+                    <ul style="margin-top: 0.5rem;">
+                        <li><strong>名字</strong>：你给盒子起的标签（如 <code>count</code>）</li>
+                        <li><strong>类型</strong>：盒子能装什么（数字、字符等）</li>
+                        <li><strong>值</strong>：盒子里实际装的东西</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>变量的概念图解</h4>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 2px dashed var(--primary-color);">
+                                <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">42</div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-family: monospace; color: var(--text-secondary);">count</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">int 类型</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 2px dashed var(--success-color);">
+                                <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">A</div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-family: monospace; color: var(--text-secondary);">grade</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">char 类型</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 2px dashed var(--warning-color);">
+                                <div style="font-size: 2rem; font-weight: bold; color: var(--warning-color);">3.14</div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-family: monospace; color: var(--text-secondary);">price</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">float 类型</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 常用数据类型 -->
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    📊 常用数据类型
+                </h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>类型</th>
+                                <th>含义</th>
+                                <th>大小</th>
+                                <th>示例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>int</code></td>
+                                <td>整数</td>
+                                <td>4 字节</td>
+                                <td><code>int age = 25;</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>char</code></td>
+                                <td>字符</td>
+                                <td>1 字节</td>
+                                <td><code>char grade = 'A';</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>float</code></td>
+                                <td>单精度浮点</td>
+                                <td>4 字节</td>
+                                <td><code>float pi = 3.14;</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>double</code></td>
+                                <td>双精度浮点</td>
+                                <td>8 字节</td>
+                                <td><code>double e = 2.718;</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 判断语句 -->
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🔀 什么是判断？
+                </h3>
+
+                <div class="info-box">
+                    <p><strong>判断</strong>就是让程序根据条件做不同的事情。就像生活中："如果下雨，就带伞；否则，不带。"</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>if-else 流程图</h4>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <div class="flow-step" style="background: rgba(245, 158, 11, 0.2); border-color: var(--warning-color);">
+                            <div>条件判断</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">count > 5 ?</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div class="flow-step" style="border-color: var(--success-color); background: rgba(16, 185, 129, 0.1);">
+                                <div style="color: var(--success-color);">✓ 是</div>
+                                <div style="font-size: 0.8rem;">执行代码块 A</div>
+                            </div>
+                            <div class="flow-step" style="border-color: var(--danger-color); background: rgba(239, 68, 68, 0.1);">
+                                <div style="color: var(--danger-color);">✗ 否</div>
+                                <div style="font-size: 0.8rem;">执行代码块 B</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 循环 -->
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🔄 什么是循环？
+                </h3>
+
+                <div class="info-box">
+                    <p><strong>循环</strong>就是让程序重复执行某段代码。就像："抄写 10 遍课文"——做同样的事情多次。</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>两种常见循环</h4>
+                    <div class="card-grid">
+                        <div class="feature-card">
+                            <div class="icon">🔢</div>
+                            <h4>for 循环</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                <strong>知道次数</strong>时使用<br>
+                                "抄写 10 遍"
+                            </p>
+                            <div style="font-family: monospace; font-size: 0.85rem; color: var(--primary-color); margin-top: 0.5rem;">
+                                for (i = 0; i &lt; 10; i++)
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon">🔁</div>
+                            <h4>while 循环</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                <strong>不知道次数</strong>时使用<br>
+                                "直到读完为止"
+                            </p>
+                            <div style="font-family: monospace; font-size: 0.85rem; color: var(--primary-color); margin-top: 0.5rem;">
+                                while (还有数据)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 综合代码示例 -->
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    💻 综合代码示例
+                </h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>基础语法示例（变量 + 判断 + 循环）</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    // ===== 变量声明 =====
+    int count = 10;        // 整数变量
+    char *name = "Linux";  // 字符串变量
+    
+    // ===== 条件判断 =====
+    if (count > 5) {
+        printf("Count 大于 5\n");
+    } else {
+        printf("Count 小于等于 5\n");
+    }
+    
+    // ===== for 循环 =====
+    printf("for 循环:\n");
+    for (int i = 0; i < count; i++) {
+        printf("  第 %d 次\n", i + 1);
+    }
+    
+    // ===== while 循环 =====
+    printf("while 循环:\n");
+    int j = 0;
+    while (j < 3) {
+        printf("  j = %d\n", j);
+        j++;
+    }
+    
+    return 0;
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- 函数 -->
+            <section class="content-section" id="functions">
+                <h2 class="section-title">
+                    <span class="icon">📦</span>
+                    2. 函数
+                </h2>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🤔 什么是函数？
+                </h3>
+
+                <div class="info-box">
+                    <p><strong>函数</strong>是一段可以重复使用的代码块。把它想象成一个"工具"：</p>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>你给它一些<strong>输入</strong>（参数）</li>
+                        <li>它帮你做<strong>处理</strong></li>
+                        <li>然后给你一个<strong>输出</strong>（返回值）</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>函数的工作原理（以"加法器"为例）</h4>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); border: 2px solid var(--primary-color);">
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">输入</div>
+                                <div style="font-family: monospace; color: var(--primary-color);">a=3, b=5</div>
+                            </div>
+                        </div>
+                        <span style="font-size: 1.5rem; color: var(--text-muted);">→</span>
+                        <div style="text-align: center;">
+                            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); padding: 1.5rem 2rem; border-radius: var(--radius-lg); color: white;">
+                                <div style="font-weight: bold;">add 函数</div>
+                                <div style="font-size: 0.85rem;">a + b</div>
+                            </div>
+                        </div>
+                        <span style="font-size: 1.5rem; color: var(--text-muted);">→</span>
+                        <div style="text-align: center;">
+                            <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); border: 2px solid var(--success-color);">
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">输出</div>
+                                <div style="font-family: monospace; color: var(--success-color); font-weight: bold;">8</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🏗️ 函数的组成部分
+                </h3>
+
+                <div class="diagram-container">
+                    <h4>函数结构图解</h4>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; line-height: 2;">
+                        <div><span style="color: var(--warning-color);">int</span> <span style="color: var(--primary-color);">add</span><span style="color: var(--text-secondary);">(</span><span style="color: var(--warning-color);">int</span> a, <span style="color: var(--warning-color);">int</span> b<span style="color: var(--text-secondary);">)</span> {</div>
+                        <div style="padding-left: 2rem;">↑    ↑          ↑            ↑</div>
+                        <div style="padding-left: 2rem;">│    │          │            │</div>
+                        <div style="padding-left: 2rem;">│    │          └── <span style="color: var(--text-muted);">参数列表（输入）</span></div>
+                        <div style="padding-left: 2rem;">│    └── <span style="color: var(--text-muted);">函数名</span></div>
+                        <div style="padding-left: 2rem;">└── <span style="color: var(--text-muted);">返回类型（输出类型）</span></div>
+                        <div>    <span style="color: var(--danger-color);">return</span> a + b;  <span style="color: var(--text-muted);">// 返回结果</span></div>
+                        <div>}</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>组成部分</th>
+                                <th>说明</th>
+                                <th>比喻</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>返回类型</strong></td>
+                                <td>函数输出什么类型的数据</td>
+                                <td>工厂生产的产品类型</td>
+                            </tr>
+                            <tr>
+                                <td><strong>函数名</strong></td>
+                                <td>调用时使用的名称</td>
+                                <td>工具的名字</td>
+                            </tr>
+                            <tr>
+                                <td><strong>参数列表</strong></td>
+                                <td>输入数据</td>
+                                <td>原材料</td>
+                            </tr>
+                            <tr>
+                                <td><strong>函数体</strong></td>
+                                <td>具体处理逻辑</td>
+                                <td>加工过程</td>
+                            </tr>
+                            <tr>
+                                <td><strong>return</strong></td>
+                                <td>返回结果</td>
+                                <td>产出成品</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    💻 函数示例
+                </h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>函数定义与调用</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+
+// 函数声明：告诉编译器这个函数存在
+int add(int a, int b);
+void greet(const char *name);
+
+int main() {
+    // 调用函数
+    int result = add(3, 5);
+    printf("3 + 5 = %d\n", result);
+    
+    greet("Linux");
+    
+    return 0;
+}
+
+// 函数定义：具体实现
+int add(int a, int b) {
+    return a + b;  // 返回两数之和
+}
+
+void greet(const char *name) {
+    printf("Hello, %s!\n", name);
+    // void 表示不返回任何值
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- 指针 -->
+            <section class="content-section" id="pointers">
+                <h2 class="section-title">
+                    <span class="icon">👉</span>
+                    3. 指针（最关键）
+                </h2>
+
+                <div class="warning-box">
+                    <h4>⚠️ 指针是 C 语言最重要也最容易出错的概念</h4>
+                    <p>很多初学者觉得指针难，但理解后会发现它非常强大！</p>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🤔 什么是指针？
+                </h3>
+
+                <div class="info-box">
+                    <p><strong>指针</strong>是一个特殊的变量，它存储的不是普通数据，而是<strong>内存地址</strong>。</p>
+                    <p style="margin-top: 0.5rem;">想象一个酒店：</p>
+                    <ul style="margin-top: 0.5rem;">
+                        <li><strong>变量</strong> = 房间里住的人</li>
+                        <li><strong>内存地址</strong> = 房间号（如 301）</li>
+                        <li><strong>指针</strong> = 一张写着"301"的纸条，告诉你去哪找人</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>指针与变量的关系</h4>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">内存中的变量</div>
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 2px solid var(--primary-color);">
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">地址: 0x1000</div>
+                                <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">42</div>
+                                <div style="font-size: 0.9rem;">value</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; color: var(--text-muted);">← 通过地址找到</div>
+                            <div style="font-size: 0.9rem; color: var(--primary-color); margin-top: 0.5rem;">ptr = &value</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">指针变量</div>
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 2px solid var(--secondary-color);">
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">地址: 0x2000</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--secondary-color);">0x1000</div>
+                                <div style="font-size: 0.9rem;">ptr</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🔑 两个关键符号
+                </h3>
+
+                <div class="card-grid">
+                    <div class="feature-card" style="border-color: var(--primary-color);">
+                        <div style="font-size: 3rem; text-align: center; color: var(--primary-color);">&</div>
+                        <h4 style="text-align: center;">取地址符</h4>
+                        <p style="text-align: center; color: var(--text-secondary);">
+                            <code>&variable</code><br>
+                            获取变量的内存地址
+                        </p>
+                        <div style="text-align: center; margin-top: 0.5rem;">
+                            <span class="tag primary">问：在哪？</span>
+                        </div>
+                    </div>
+                    <div class="feature-card" style="border-color: var(--success-color);">
+                        <div style="font-size: 3rem; text-align: center; color: var(--success-color);">*</div>
+                        <h4 style="text-align: center;">解引用符</h4>
+                        <p style="text-align: center; color: var(--text-secondary);">
+                            <code>*pointer</code><br>
+                            获取指针指向的值
+                        </p>
+                        <div style="text-align: center; margin-top: 0.5rem;">
+                            <span class="tag success">答：是这个！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>指针操作图解</h4>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 2.2;">
+                        <div><span style="color: var(--primary-color);">int</span> value = <span style="color: var(--warning-color);">42</span>;</div>
+                        <div><span style="color: var(--primary-color);">int</span> *ptr = <span style="color: var(--danger-color);">&</span>value;</div>
+                        <div style="color: var(--text-muted);">//        ↑ ptr 现在存储 value 的地址</div>
+                        <br>
+                        <div>printf(<span style="color: var(--success-color);">"%d"</span>, value);   <span style="color: var(--text-muted);">// 输出: 42</span></div>
+                        <div>printf(<span style="color: var(--success-color);">"%p"</span>, <span style="color: var(--danger-color);">&</span>value);  <span style="color: var(--text-muted);">// 输出: 0x1000 (地址)</span></div>
+                        <div>printf(<span style="color: var(--success-color);">"%d"</span>, <span style="color: var(--danger-color);">*</span>ptr);    <span style="color: var(--text-muted);">// 输出: 42 (通过指针访问)</span></div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    💻 指针基础示例
+                </h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>指针基础操作</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int value = 42;
+    
+    // 声明指针并让它指向 value
+    int *ptr = &value;  // ptr 存储 value 的地址
+    
+    printf("=== 指针基础 ===\n");
+    printf("value 的值: %d\n", value);           // 42
+    printf("value 的地址: %p\n", (void*)&value); // 0x1000（示例）
+    printf("ptr 存储的地址: %p\n", (void*)ptr);  // 0x1000（同上）
+    printf("通过 ptr 访问值: %d\n", *ptr);       // 42
+    
+    // 通过指针修改值
+    printf("\n=== 通过指针修改 ===\n");
+    *ptr = 100;  // 解引用并赋值
+    printf("修改后 value = %d\n", value);       // 100
+    
+    return 0;
+}</code></pre>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🧩 指针与数组
+                </h3>
+
+                <div class="info-box">
+                    <p>数组名本质上就是指向第一个元素的指针！</p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>指针与数组</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>int arr[5] = {10, 20, 30, 40, 50};
+int *p = arr;  // arr 等于 &arr[0]
+
+// 两种方式访问数组元素
+for (int i = 0; i < 5; i++) {
+    printf("arr[%d] = %d (或 %d)\n", i, p[i], *(p + i));
+}
+
+// 指针运算
+printf("*(p+0) = %d\n", *(p+0));  // 10 (第一个元素)
+printf("*(p+2) = %d\n", *(p+2));  // 30 (第三个元素)</code></pre>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🏗️ 动态内存分配
+                </h3>
+
+                <div class="info-box">
+                    <p>使用指针可以在运行时动态申请内存（堆内存）。</p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>动态内存分配</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+    // malloc: 分配内存
+    int *arr = malloc(sizeof(int) * 10);  // 分配 10 个 int
+    if (arr == NULL) {
+        printf("内存分配失败!\n");
+        return 1;
+    }
+    
+    // 使用内存
+    for (int i = 0; i < 10; i++) {
+        arr[i] = i * 2;
+    }
+    
+    // free: 释放内存（必须！否则内存泄漏）
+    free(arr);
+    
+    return 0;
+}</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ 指针使用注意事项</h4>
+                    <ul>
+                        <li>指针声明后要<strong>初始化</strong>（或设为 NULL）</li>
+                        <li>使用前检查是否为 NULL</li>
+                        <li>malloc 后必须 free（成对出现）</li>
+                        <li>不要访问已释放的内存（悬空指针）</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 文件操作 -->
+            <section class="content-section" id="file-operations">
+                <h2 class="section-title">
+                    <span class="icon">📄</span>
+                    4. 文件操作
+                </h2>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🤔 为什么需要文件操作？
+                </h3>
+
+                <div class="info-box">
+                    <p>程序运行时数据在内存中，程序结束后就消失了。<strong>文件操作</strong>让数据可以<strong>持久化保存</strong>到磁盘上。</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>文件操作的基本流程</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="num">1</span>
+                            <div>打开文件</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">fopen</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">
+                            <span class="num">2</span>
+                            <div>读写数据</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">fprintf/fgets</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step highlight">
+                            <span class="num">3</span>
+                            <div>关闭文件</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">fclose</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    📂 打开模式
+                </h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>模式</th>
+                                <th>说明</th>
+                                <th>文件不存在时</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>"r"</code></td>
+                                <td>只读</td>
+                                <td style="color: var(--danger-color);">失败</td>
+                            </tr>
+                            <tr>
+                                <td><code>"w"</code></td>
+                                <td>只写（会清空原内容）</td>
+                                <td style="color: var(--success-color);">创建新文件</td>
+                            </tr>
+                            <tr>
+                                <td><code>"a"</code></td>
+                                <td>追加（在文件末尾添加）</td>
+                                <td style="color: var(--success-color);">创建新文件</td>
+                            </tr>
+                            <tr>
+                                <td><code>"r+"</code></td>
+                                <td>读写</td>
+                                <td style="color: var(--danger-color);">失败</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    💻 文件操作示例
+                </h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>文件读写示例</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    // ===== 写入文件 =====
+    FILE *fp = fopen("test.txt", "w");
+    if (fp == NULL) {
+        printf("无法打开文件!\n");
+        return 1;
+    }
+    
+    fprintf(fp, "Hello, File!\n");
+    fprintf(fp, "这是第二行\n");
+    fclose(fp);  // 记得关闭！
+    
+    // ===== 读取文件 =====
+    fp = fopen("test.txt", "r");
+    char buffer[100];
+    
+    printf("文件内容:\n");
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        printf("%s", buffer);
+    }
+    fclose(fp);
+    
+    return 0;
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- 进程创建 -->
+            <section class="content-section" id="process-creation">
+                <h2 class="section-title">
+                    <span class="icon">🔄</span>
+                    5. 进程创建
+                </h2>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    🤔 什么是进程创建？
+                </h3>
+
+                <div class="info-box">
+                    <p>在 C 语言中，可以通过 <strong>fork()</strong> 创建子进程，让程序"分身"成两个同时运行的进程。</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>fork() 工作原理</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <div>父进程</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">PID: 1000</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step highlight" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));">
+                            <div style="font-weight: bold;">fork()</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">复制进程</div>
+                        </div>
+                        <span class="flow-arrow">→</span>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div class="flow-step">
+                                <div>父进程继续</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">返回子PID: 1001</div>
+                            </div>
+                            <div class="flow-step" style="border-color: var(--success-color); background: rgba(16, 185, 129, 0.1);">
+                                <div>子进程诞生</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">返回 0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>系统调用</th>
+                                <th>作用</th>
+                                <th>返回值</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>fork()</code></td>
+                                <td>创建子进程（复制当前进程）</td>
+                                <td>父进程返回子PID，子进程返回 0</td>
+                            </tr>
+                            <tr>
+                                <td><code>exec()</code></td>
+                                <td>执行新程序（替换当前进程）</td>
+                                <td>成功不返回，失败返回 -1</td>
+                            </tr>
+                            <tr>
+                                <td><code>wait()</code></td>
+                                <td>等待子进程结束</td>
+                                <td>返回子进程 PID</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem; font-size: 1.2rem;">
+                    💻 进程创建示例
+                </h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>fork 进程创建</span>
+                        <button class="copy-btn">复制</button>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    printf("父进程 PID: %d\n", getpid());
+    
+    pid_t pid = fork();  // 创建子进程
+    
+    if (pid == -1) {
+        printf("fork 失败!\n");
+        return 1;
+    }
+    
+    if (pid == 0) {
+        // ===== 这是子进程 =====
+        printf("我是子进程, PID: %d\n", getpid());
+        
+        // 可以执行其他程序
+        execl("/bin/ls", "ls", "-la", NULL);
+        
+    } else {
+        // ===== 这是父进程 =====
+        printf("我是父进程, 子进程 PID: %d\n", pid);
+        
+        // 等待子进程结束
+        wait(NULL);
+        printf("子进程已结束\n");
+    }
+    
+    return 0;
+}</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ 僵尸进程</h4>
+                    <p>父进程必须调用 <code>wait()</code> 回收子进程，否则子进程会变成"僵尸进程"占用系统资源。</p>
+                </div>
+            </section>
+
+            <!-- 总结 -->
+            <section class="content-section" id="summary">
+                <h2 class="section-title">
+                    <span class="icon">📌</span>
+                    本节总结
+                </h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>主题</th>
+                                <th>核心概念</th>
+                                <th>关键点</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>变量/判断/循环</strong></td>
+                                <td>程序的基本构建块</td>
+                                <td>变量存储数据，判断做决策，循环重复执行</td>
+                            </tr>
+                            <tr>
+                                <td><strong>函数</strong></td>
+                                <td>可复用的代码块</td>
+                                <td>输入 → 处理 → 输出</td>
+                            </tr>
+                            <tr>
+                                <td><strong>指针</strong></td>
+                                <td>存储内存地址的变量</td>
+                                <td>& 取地址，* 解引用</td>
+                            </tr>
+                            <tr>
+                                <td><strong>文件操作</strong></td>
+                                <td>持久化存储数据</td>
+                                <td>打开 → 读写 → 关闭</td>
+                            </tr>
+                            <tr>
+                                <td><strong>进程创建</strong></td>
+                                <td>创建子进程</td>
+                                <td>fork 创建，exec 执行，wait 等待</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 完成按钮 -->
+            <div class="completion-section" style="text-align: center; margin: 3rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius-xl);">
+                <h3 style="margin-bottom: 1rem;">🎉 完成本模块学习？</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">点击按钮保存学习进度</p>
+                <button onclick="markCompleted('c-programming')" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius-lg); font-size: 1rem; font-weight: 600; cursor: pointer;">
+                    ✓ 标记为已完成
+                </button>
+            </div>
+
+            <!-- 导航按钮 -->
+            <div class="nav-buttons">
+                <a href="architecture.html" class="nav-btn">
+                    ← 上一章：系统架构
+                </a>
+                <a href="kernel.html" class="nav-btn next">
+                    下一章：内核模块 →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Linux 系统编程学习指南</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

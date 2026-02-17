@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux 系统编程学习 - 首页</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🐧</span>
+            <span class="title">Linux 系统编程</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">首页</a></li>
+            <li><a href="pages/linux-env.html">Linux环境</a></li>
+            <li><a href="pages/architecture.html">系统架构</a></li>
+            <li><a href="pages/c-programming.html">C语言</a></li>
+            <li><a href="pages/kernel.html">内核模块</a></li>
+            <li><a href="pages/android.html">安卓</a></li>
+            <li><a href="pages/quiz.html">测验</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Linux 系统编程学习指南</h1>
+                <p class="subtitle">从基础到内核，图文并茂的系统化学习</p>
+                <p class="description">
+                    本教程基于 Beej's Guide to IPC 和 System Programming Notes<br>
+                    涵盖 Linux 环境基础、系统架构、C 语言编程、内核模块等核心内容
+                </p>
+            </div>
+            <div class="hero-illustration">
+                <div class="arch-preview">
+                    <div class="layer app">应用层</div>
+                    <div class="layer lib">库层</div>
+                    <div class="layer kernel">内核层</div>
+                    <div class="layer hw">硬件层</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="modules-section">
+            <h2>📚 学习模块</h2>
+            <div class="module-grid">
+                <a href="pages/linux-env.html" class="module-card">
+                    <div class="card-header">
+                        <span class="module-num">01</span>
+                        <span class="module-icon">🖥️</span>
+                    </div>
+                    <h3>熟悉 Linux 环境</h3>
+                    <ul>
+                        <li>什么是 root</li>
+                        <li>用户权限管理</li>
+                        <li>进程基础概念</li>
+                    </ul>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="pages/architecture.html" class="module-card">
+                    <div class="card-header">
+                        <span class="module-num">02</span>
+                        <span class="module-icon">🏗️</span>
+                    </div>
+                    <h3>Linux 整体结构</h3>
+                    <ul>
+                        <li>硬件层</li>
+                        <li>内核层</li>
+                        <li>系统库层</li>
+                        <li>应用层</li>
+                    </ul>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="pages/c-programming.html" class="module-card">
+                    <div class="card-header">
+                        <span class="module-num">03</span>
+                        <span class="module-icon">💻</span>
+                    </div>
+                    <h3>C 语言编程</h3>
+                    <ul>
+                        <li>变量、判断、循环</li>
+                        <li>函数</li>
+                        <li>指针（最关键）</li>
+                        <li>文件操作、进程创建</li>
+                    </ul>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="pages/kernel.html" class="module-card">
+                    <div class="card-header">
+                        <span class="module-num">04</span>
+                        <span class="module-icon">⚙️</span>
+                    </div>
+                    <h3>内核核心模块</h3>
+                    <ul>
+                        <li>进程管理</li>
+                        <li>内存管理</li>
+                        <li>文件系统</li>
+                        <li>设备驱动 & 网络</li>
+                    </ul>
+                    <span class="card-arrow">→</span>
+                </a>
+
+                <a href="pages/android.html" class="module-card">
+                    <div class="card-header">
+                        <span class="module-num">05</span>
+                        <span class="module-icon">📱</span>
+                    </div>
+                    <h3>安卓与 Linux</h3>
+                    <ul>
+                        <li>架构对比</li>
+                        <li>内核层面关系</li>
+                        <li>框架层差异</li>
+                    </ul>
+                    <span class="card-arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="progress-section">
+            <h2>📈 学习进度</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p>完成 <span id="completed-count">0</span> / 5 个模块</p>
+            </div>
+        </section>
+
+        <section class="source-section">
+            <h2>📖 资料来源</h2>
+            <div class="source-cards">
+                <div class="source-card">
+                    <h4>Beej's Guide to IPC</h4>
+                    <p class="source-desc">Linux 进程间通信完全指南，涵盖管道、消息队列、共享内存、信号量等 IPC 机制。</p>
+                    <p class="source-author"><strong>作者：</strong>Brian "Beej Jorgensen" Hall — 知名技术作家，其系列教程以通俗易懂、风趣幽默著称，被全球开发者广泛使用超过 20 年。</p>
+                    <a href="https://beej.us/guide/bgipc/" target="_blank">访问官网 →</a>
+                </div>
+                <div class="source-card">
+                    <h4>System Programming Notes</h4>
+                    <p class="source-desc">基于 Angrave's System Programming 课程的系统编程学习笔记。</p>
+                    <p class="source-author"><strong>来源：</strong>UIUC（伊利诺伊大学香槟分校）CS341 系统编程课程 — 世界顶级计算机学府的经典课程，被数万学生验证学习效果。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="update-section">
+            <h2>🕐 更新记录</h2>
+            <div class="update-info">
+                <div class="update-item">
+                    <span class="update-label">最近更新</span>
+                    <span class="update-time" id="last-update-time">2026-02-17 20:30</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-label">版本</span>
+                    <span class="update-version">v1.0.0</span>
+                </div>
+                <div class="update-item">
+                    <span class="update-label">题库数量</span>
+                    <span class="update-quiz">50 道选择题</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Linux 系统编程学习指南 | 基于开源资料整理 | 更新于 2026-02-17</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

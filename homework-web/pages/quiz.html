@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识测验 - Linux 系统编程</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="quiz.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🐧</span>
+            <span class="title">Linux 系统编程</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="linux-env.html">Linux环境</a></li>
+            <li><a href="architecture.html">系统架构</a></li>
+            <li><a href="c-programming.html">C语言</a></li>
+            <li><a href="kernel.html">内核模块</a></li>
+            <li><a href="android.html">安卓</a></li>
+            <li><a href="quiz.html" class="active">测验</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-container">
+            <header class="page-header">
+                <h1><span class="icon">📝</span> 知识测验</h1>
+                <p class="breadcrumb"><a href="../index.html">首页</a> / 知识测验</p>
+            </header>
+
+            <!-- 测验介绍 -->
+            <section class="quiz-intro" id="quiz-intro">
+                <div class="intro-card">
+                    <h2>🎯 测验说明</h2>
+                    <ul>
+                        <li>共 <strong>5 个模块</strong>，每个模块 10 道选择题</li>
+                        <li>总共 <strong>50 道题</strong>，每题 2 分，满分 100 分</li>
+                        <li>答题完成后可查看答案和解析</li>
+                        <li>支持重新答题，巩固知识</li>
+                    </ul>
+                    
+                    <div class="module-overview">
+                        <h3>📚 测验模块</h3>
+                        <div class="module-tags">
+                            <span class="module-tag" data-module="linux-env">🖥️ Linux 环境</span>
+                            <span class="module-tag" data-module="architecture">🏗️ 系统架构</span>
+                            <span class="module-tag" data-module="c-programming">💻 C 语言</span>
+                            <span class="module-tag" data-module="kernel">⚙️ 内核模块</span>
+                            <span class="module-tag" data-module="android">📱 安卓</span>
+                        </div>
+                    </div>
+                    
+                    <button class="start-btn" onclick="startQuiz()">
+                        开始测验 →
+                    </button>
+                </div>
+            </section>
+
+            <!-- 测验区域 -->
+            <section class="quiz-section" id="quiz-section" style="display: none;">
+                <!-- 进度条 -->
+                <div class="quiz-progress">
+                    <div class="progress-info">
+                        <span id="current-module">模块 1/5</span>
+                        <span id="current-question">题目 1/10</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- 模块选择 -->
+                <div class="module-selector">
+                    <button class="module-btn active" data-module="0" onclick="switchModule(0)">
+                        <span class="num">1</span>
+                        <span class="name">Linux 环境</span>
+                        <span class="status" id="status-0"></span>
+                    </button>
+                    <button class="module-btn" data-module="1" onclick="switchModule(1)">
+                        <span class="num">2</span>
+                        <span class="name">系统架构</span>
+                        <span class="status" id="status-1"></span>
+                    </button>
+                    <button class="module-btn" data-module="2" onclick="switchModule(2)">
+                        <span class="num">3</span>
+                        <span class="name">C 语言</span>
+                        <span class="status" id="status-2"></span>
+                    </button>
+                    <button class="module-btn" data-module="3" onclick="switchModule(3)">
+                        <span class="num">4</span>
+                        <span class="name">内核模块</span>
+                        <span class="status" id="status-3"></span>
+                    </button>
+                    <button class="module-btn" data-module="4" onclick="switchModule(4)">
+                        <span class="num">5</span>
+                        <span class="name">安卓</span>
+                        <span class="status" id="status-4"></span>
+                    </button>
+                </div>
+
+                <!-- 题目区域 -->
+                <div class="question-area" id="question-area">
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span class="question-number" id="q-number">Q1</span>
+                            <span class="question-module" id="q-module">Linux 环境</span>
+                        </div>
+                        <div class="question-text" id="q-text">
+                            题目加载中...
+                        </div>
+                        <div class="options-list" id="options-list">
+                            <!-- 选项动态生成 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 导航按钮 -->
+                <div class="quiz-navigation">
+                    <button class="nav-btn prev" onclick="prevQuestion()" id="prev-btn">
+                        ← 上一题
+                    </button>
+                    <button class="nav-btn next" onclick="nextQuestion()" id="next-btn">
+                        下一题 →
+                    </button>
+                    <button class="nav-btn submit" onclick="submitQuiz()" id="submit-btn" style="display: none;">
+                        提交答卷 📤
+                    </button>
+                </div>
+            </section>
+
+            <!-- 结果区域 -->
+            <section class="result-section" id="result-section" style="display: none;">
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="score-circle" id="score-circle">
+                            <span class="score-number" id="score-number">0</span>
+                            <span class="score-label">分</span>
+                        </div>
+                        <h2 id="result-title">测验完成！</h2>
+                        <p id="result-message">正在计算成绩...</p>
+                    </div>
+
+                    <div class="module-scores" id="module-scores">
+                        <!-- 模块得分动态生成 -->
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="action-btn review" onclick="reviewAnswers()">
+                            📖 查看解析
+                        </button>
+                        <button class="action-btn retry" onclick="retryQuiz()">
+                            🔄 重新测验
+                        </button>
+                        <a href="../index.html" class="action-btn home">
+                            🏠 返回首页
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 答案解析区域 -->
+            <section class="review-section" id="review-section" style="display: none;">
+                <div class="review-header">
+                    <h2>📖 答案解析</h2>
+                    <button class="back-btn" onclick="backToResult()">← 返回成绩</button>
+                </div>
+                <div class="review-content" id="review-content">
+                    <!-- 解析内容动态生成 -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Linux 系统编程学习指南</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="quiz-data.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>
