@@ -81,7 +81,7 @@ body {
    ======================================== */
 .navbar {
     position: fixed;
-    top: 0;
+    top: 40px;
     left: 0;
     right: 0;
     height: 64px;
@@ -143,7 +143,7 @@ body {
    主内容区
    ======================================== */
 .main-content {
-    padding-top: 64px;
+    padding-top: 104px; /* 64px navbar + 40px switch bar */
     min-height: 100vh;
 }
 
@@ -960,4 +960,452 @@ table tr:hover {
         flex-direction: column;
         gap: 1rem;
     }
+}
+
+/* ========================================
+   视图切换按钮
+   ======================================== */
+.view-switch-bar {
+    position: relative;
+    height: 40px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 2000;
+}
+
+.view-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.4rem 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-switch-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
+.view-switch-btn .view-icon {
+    font-size: 1rem;
+}
+
+/* ========================================
+   页面容器包装器
+   ======================================== */
+.page-container-wrapper {
+    margin-top: 0;
+    min-height: 100vh;
+}
+
+/* ========================================
+   手机版布局 (iPhone 17 尺寸: 393 x 852)
+   默认视图
+   ======================================== */
+body.mobile-view {
+    background: #000;
+}
+
+body.mobile-view .page-container-wrapper {
+    max-width: 393px;
+    min-height: 852px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 手机版导航栏 */
+body.mobile-view .navbar {
+    position: sticky;
+    top: 0;
+    height: auto;
+    min-height: 56px;
+    padding: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+}
+
+body.mobile-view .nav-brand {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+body.mobile-view .nav-brand .title {
+    font-size: 1rem;
+}
+
+body.mobile-view .nav-links {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+body.mobile-view .nav-links li {
+    flex: 0 0 auto;
+}
+
+body.mobile-view .nav-links a {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+}
+
+/* 手机版主内容 */
+body.mobile-view .main-content {
+    padding-top: 0;
+}
+
+/* 手机版 Hero 区域 */
+body.mobile-view .hero {
+    min-height: auto;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+body.mobile-view .hero h1 {
+    font-size: 1.5rem;
+}
+
+body.mobile-view .hero .subtitle {
+    font-size: 1rem;
+}
+
+body.mobile-view .hero .description {
+    font-size: 0.9rem;
+}
+
+body.mobile-view .hero-illustration {
+    margin-top: 1rem;
+}
+
+body.mobile-view .arch-preview .layer {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    min-width: 140px;
+}
+
+/* 手机版模块区域 */
+body.mobile-view .modules-section {
+    padding: 1.5rem 1rem;
+}
+
+body.mobile-view .modules-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+body.mobile-view .module-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+body.mobile-view .module-card {
+    padding: 1.25rem;
+}
+
+body.mobile-view .module-num {
+    font-size: 1.75rem;
+}
+
+body.mobile-view .module-icon {
+    font-size: 1.5rem;
+}
+
+body.mobile-view .module-card h3 {
+    font-size: 1.1rem;
+}
+
+body.mobile-view .module-card li {
+    font-size: 0.85rem;
+}
+
+/* 手机版进度区域 */
+body.mobile-view .progress-section {
+    padding: 1.5rem 1rem;
+}
+
+body.mobile-view .progress-section h2 {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .progress-container {
+    max-width: 100%;
+}
+
+/* 手机版资料来源 */
+body.mobile-view .source-section {
+    padding: 1.5rem 1rem;
+}
+
+body.mobile-view .source-section h2 {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .source-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+body.mobile-view .source-card {
+    padding: 1rem;
+}
+
+body.mobile-view .source-card h4 {
+    font-size: 1rem;
+}
+
+body.mobile-view .source-card .source-desc,
+body.mobile-view .source-card .source-author {
+    font-size: 0.85rem;
+}
+
+/* 手机版更新记录 */
+body.mobile-view .update-section {
+    padding: 1.5rem 1rem;
+}
+
+body.mobile-view .update-section h2 {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .update-info {
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+body.mobile-view .update-label {
+    font-size: 0.75rem;
+}
+
+body.mobile-view .update-time {
+    font-size: 0.9rem;
+}
+
+/* 手机版页脚 */
+body.mobile-view .footer {
+    padding: 1.5rem 1rem;
+}
+
+body.mobile-view .footer p {
+    font-size: 0.8rem;
+}
+
+/* ========================================
+   网页版布局
+   ======================================== */
+body.desktop-view {
+    background: var(--bg-primary);
+}
+
+body.desktop-view .view-switch-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+}
+
+body.desktop-view .page-container-wrapper {
+    max-width: none;
+    margin: 0;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+body.desktop-view .navbar {
+    position: fixed;
+    top: 40px;
+}
+
+body.desktop-view .main-content {
+    padding-top: 64px;
+    margin-top: 40px;
+}
+
+/* ========================================
+   手机版底部导航 (隐藏，通过顶部导航切换页面)
+   ======================================== */
+.mobile-bottom-nav {
+    display: none;
+}
+
+body.mobile-view .mobile-bottom-nav {
+    display: none;
+}
+
+/* 手机版页面底部留白 */
+body.mobile-view main {
+    padding-bottom: 20px;
+}
+
+/* ========================================
+   手机版内容页面样式
+   ======================================== */
+body.mobile-view .page-container {
+    padding: 1rem;
+}
+
+body.mobile-view .page-header {
+    margin-bottom: 1.5rem;
+}
+
+body.mobile-view .page-header h1 {
+    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+body.mobile-view .page-header .icon {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .breadcrumb {
+    font-size: 0.8rem;
+}
+
+body.mobile-view .section-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+body.mobile-view .content-section {
+    margin-bottom: 2rem;
+}
+
+body.mobile-view .info-box,
+body.mobile-view .warning-box,
+body.mobile-view .success-box {
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+body.mobile-view .info-box h4,
+body.mobile-view .warning-box h4,
+body.mobile-view .success-box h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+body.mobile-view .info-box p,
+body.mobile-view .warning-box p,
+body.mobile-view .success-box p,
+body.mobile-view .info-box ul,
+body.mobile-view .warning-box ul {
+    font-size: 0.9rem;
+}
+
+body.mobile-view .diagram-container {
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+body.mobile-view .diagram-container h4 {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+body.mobile-view .card-grid {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+}
+
+body.mobile-view .feature-card {
+    padding: 1rem;
+}
+
+body.mobile-view .feature-card .icon {
+    font-size: 1.5rem;
+}
+
+body.mobile-view .feature-card h4 {
+    font-size: 1rem;
+}
+
+body.mobile-view .feature-card p,
+body.mobile-view .feature-card ul {
+    font-size: 0.85rem;
+}
+
+body.mobile-view .code-block {
+    margin: 1rem 0;
+}
+
+body.mobile-view .code-block pre {
+    padding: 1rem;
+}
+
+body.mobile-view .code-block code {
+    font-size: 0.8rem;
+}
+
+body.mobile-view .table-container {
+    margin: 1rem 0;
+}
+
+body.mobile-view table th,
+body.mobile-view table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+body.mobile-view .arch-diagram .arch-layer {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+}
+
+body.mobile-view .flow-diagram {
+    gap: 0.5rem;
+}
+
+body.mobile-view .flow-step {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+body.mobile-view .flow-step .num {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+}
+
+body.mobile-view .nav-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+body.mobile-view .nav-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+body.mobile-view .completion-section {
+    padding: 1.5rem 1rem;
+    margin: 2rem 0;
+}
+
+body.mobile-view .completion-section h3 {
+    font-size: 1.1rem;
+}
+
+body.mobile-view .completion-section button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
 }

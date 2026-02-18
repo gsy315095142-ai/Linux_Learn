@@ -7,10 +7,61 @@ let currentModuleIndex = 0;
 let currentQuestionIndex = 0;
 let userAnswers = {};      // 存储用户答案 { questionId: optionIndex }
 let isSubmitted = false;
+let shuffledQuestions = {}; // 存储打乱选项后的题目
 
 const QUESTIONS_PER_MODULE = 10;  // 每个模块10道题
 const TOTAL_QUESTIONS = 50;       // 总共50道题
 const POINTS_PER_QUESTION = 2;    // 每题2分
+
+/**
+ * 打乱数组顺序（Fisher-Yates 算法）
+ */
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+/**
+ * 打乱所有题目的选项
+ */
+function shuffleAllOptions() {
+    shuffledQuestions = {};
+    
+    MODULE_ORDER.forEach(moduleKey => {
+        const module = QUIZ_DATA[moduleKey];
+        shuffledQuestions[moduleKey] = {
+            name: module.name,
+            icon: module.icon,
+            questions: module.questions.map(q => {
+                // 创建带原始索引的选项数组
+                const optionsWithIndex = q.options.map((opt, idx) => ({
+                    text: opt,
+                    originalIndex: idx,
+                    isAnswer: idx === q.answer
+                }));
+                
+                // 打乱选项
+                const shuffledOptions = shuffleArray(optionsWithIndex);
+                
+                // 找到新答案位置
+                const newAnswerIndex = shuffledOptions.findIndex(opt => opt.isAnswer);
+                
+                return {
+                    id: q.id,
+                    question: q.question,
+                    options: shuffledOptions,
+                    answer: newAnswerIndex,
+                    originalAnswer: q.answer,
+                    explanation: q.explanation
+                };
+            })
+        };
+    });
+}
 
 /**
  * 初始化测验
@@ -20,6 +71,9 @@ function initQuiz() {
     currentQuestionIndex = 0;
     userAnswers = {};
     isSubmitted = false;
+    
+    // 打乱选项顺序
+    shuffleAllOptions();
     
     // 重置模块状态显示
     for (let i = 0; i < 5; i++) {
@@ -51,11 +105,11 @@ function startQuiz() {
 }
 
 /**
- * 获取当前模块
+ * 获取当前模块（使用打乱后的数据）
  */
 function getCurrentModule() {
     const moduleKey = MODULE_ORDER[currentModuleIndex];
-    return QUIZ_DATA[moduleKey];
+    return shuffledQuestions[moduleKey];
 }
 
 /**
@@ -114,7 +168,7 @@ function displayQuestion() {
         
         optionEl.innerHTML = `
             <span class="option-letter">${String.fromCharCode(65 + index)}</span>
-            <span class="option-text">${option.substring(3)}</span>
+            <span class="option-text">${option.text.substring(3)}</span>
         `;
         
         if (!isSubmitted) {
@@ -237,7 +291,7 @@ function updateModuleButtons() {
         
         // 检查该模块是否已答完
         const moduleKey = MODULE_ORDER[index];
-        const module = QUIZ_DATA[moduleKey];
+        const module = shuffledQuestions[moduleKey];
         const answeredCount = module.questions.filter(q => 
             userAnswers[q.id] !== undefined
         ).length;
@@ -289,7 +343,7 @@ function calculateScore() {
     const moduleScores = {};
     
     MODULE_ORDER.forEach(moduleKey => {
-        const module = QUIZ_DATA[moduleKey];
+        const module = shuffledQuestions[moduleKey];
         let correctCount = 0;
         
         module.questions.forEach(q => {
@@ -425,7 +479,7 @@ function reviewAnswers() {
     reviewContent.innerHTML = '';
     
     MODULE_ORDER.forEach(moduleKey => {
-        const module = QUIZ_DATA[moduleKey];
+        const module = shuffledQuestions[moduleKey];
         
         const moduleSection = document.createElement('div');
         moduleSection.className = 'review-module';
@@ -447,7 +501,7 @@ function reviewAnswers() {
                     ${q.options.map((opt, i) => `
                         <div class="review-option ${i === q.answer ? 'answer' : ''} ${userAnswer === i && i !== q.answer ? 'user-wrong' : ''}">
                             <span class="option-letter">${String.fromCharCode(65 + i)}</span>
-                            <span>${opt.substring(3)}</span>
+                            <span>${opt.text.substring(3)}</span>
                             ${i === q.answer ? '<span class="badge correct-badge">正确答案</span>' : ''}
                             ${userAnswer === i && i !== q.answer ? '<span class="badge wrong-badge">你的答案</span>' : ''}
                         </div>

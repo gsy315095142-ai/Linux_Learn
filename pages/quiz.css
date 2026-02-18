@@ -708,3 +708,177 @@
         width: 100%;
     }
 }
+
+/* ========================================
+   手机版测验样式
+   ======================================== */
+body.mobile-view .quiz-intro {
+    padding: 1rem;
+}
+
+body.mobile-view .intro-card {
+    padding: 1.5rem;
+}
+
+body.mobile-view .intro-card h2 {
+    font-size: 1.5rem;
+}
+
+body.mobile-view .intro-card li {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+}
+
+body.mobile-view .module-tags {
+    gap: 0.5rem;
+}
+
+body.mobile-view .module-tag {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+body.mobile-view .start-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+}
+
+body.mobile-view .quiz-section,
+body.mobile-view .result-section,
+body.mobile-view .review-section {
+    padding: 1rem;
+}
+
+body.mobile-view .module-selector {
+    gap: 0.25rem;
+}
+
+body.mobile-view .module-btn {
+    padding: 0.5rem;
+    min-width: auto;
+    flex: 1;
+}
+
+body.mobile-view .module-btn .num {
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+}
+
+body.mobile-view .module-btn .name {
+    font-size: 0.7rem;
+}
+
+body.mobile-view .question-card {
+    padding: 1rem;
+}
+
+body.mobile-view .question-header {
+    margin-bottom: 1rem;
+}
+
+body.mobile-view .question-number,
+body.mobile-view .question-module {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+body.mobile-view .question-text {
+    font-size: 1rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+body.mobile-view .options-list {
+    gap: 0.75rem;
+}
+
+body.mobile-view .option-item {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+}
+
+body.mobile-view .option-letter {
+    width: 30px;
+    height: 30px;
+}
+
+body.mobile-view .option-text {
+    font-size: 0.9rem;
+}
+
+body.mobile-view .quiz-navigation {
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+body.mobile-view .quiz-navigation .nav-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+}
+
+body.mobile-view .result-card {
+    padding: 1.5rem;
+}
+
+body.mobile-view .score-circle {
+    width: 120px;
+    height: 120px;
+}
+
+body.mobile-view .score-number {
+    font-size: 2.5rem;
+}
+
+body.mobile-view .result-header h2 {
+    font-size: 1.5rem;
+}
+
+body.mobile-view .module-scores {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+body.mobile-view .module-score-card {
+    padding: 1rem;
+}
+
+body.mobile-view .module-icon {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .result-actions {
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+body.mobile-view .action-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+}
+
+body.mobile-view .review-header h2 {
+    font-size: 1.25rem;
+}
+
+body.mobile-view .review-module-title {
+    font-size: 1.1rem;
+}
+
+body.mobile-view .review-question {
+    padding: 1rem;
+}
+
+body.mobile-view .review-q-text {
+    font-size: 1rem;
+}
+
+body.mobile-view .review-option {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+body.mobile-view .review-explanation {
+    font-size: 0.85rem;
+    padding: 0.75rem;
+}

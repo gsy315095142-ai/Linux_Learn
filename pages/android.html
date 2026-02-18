@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="../css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="mobile-view">
+    <div class="view-switch-bar">
+        <button class="view-switch-btn" id="viewSwitchBtn" onclick="toggleView()">
+            <span class="view-icon">📱</span>
+            <span class="view-text">手机版</span>
+        </button>
+    </div>
+    <div class="page-container-wrapper" id="pageWrapper">
     <nav class="navbar">
         <div class="nav-brand">
             <span class="logo">🐧</span>
@@ -441,7 +448,16 @@
     <footer class="footer">
         <p>Linux 系统编程学习指南</p>
     </footer>
+    
+    <nav class="mobile-bottom-nav">
+        <a href="../index.html"><span class="icon">🏠</span><span>首页</span></a>
+        <a href="linux-env.html"><span class="icon">🖥️</span><span>Linux</span></a>
+        <a href="c-programming.html"><span class="icon">💻</span><span>C语言</span></a>
+        <a href="quiz.html"><span class="icon">📝</span><span>测验</span></a>
+    </nav>
+    </div>
 
     <script src="../js/main.js"></script>
+    <script src="../js/view-switch.js"></script>
 </body>
 </html>
